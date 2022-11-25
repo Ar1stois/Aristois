@@ -7,6 +7,23 @@ function Aristois.UnInject()
     getgenv().AristoisInjected = false
 end
 
+function Aristois.GetPlayer(PartialName)
+    local foundPlayer
+    local Players = game.Players:GetPlayers()
+    for i = 1, #Players do
+        local CurrentPlayer = Players[i]
+        if string.lower(CurrentPlayer.Name):sub(1, #PartialName) == string.lower(PartialName) then
+            foundPlayer = CurrentPlayer.Name
+            break
+        elseif string.lower(CurrentPlayer.DisplayName):sub(1, #PartialName) == string.lower(PartialName) then
+            foundPlayer = CurrentPlayer.Name
+            break
+        end
+    end
+
+    return foundPlayer 
+end
+
 function Aristois.Init(GameTxt)
     local Aristois = Instance.new("ScreenGui")
     local Arraylist = Instance.new("Frame")
