@@ -24,151 +24,6 @@ function Aristois.GetPlayer(PartialName)
     return foundPlayer 
 end
 
-function Aristois.Init(GameTxt)
-    local Aristois = Instance.new("ScreenGui")
-    local Arraylist = Instance.new("Frame")
-    local UIListLayout = Instance.new("UIListLayout")
-    local Logo = Instance.new("Frame")
-    local UICorner = Instance.new("UICorner")
-    local Text = Instance.new("TextLabel")
-    local Stats = Instance.new("Frame")
-    local FPS = Instance.new("TextLabel")
-    local BPS = Instance.new("TextLabel")
-    local UIStroke = Instance.new("UIStroke")
-
-    Aristois.Name = "Aristois"
-    Aristois.Parent = game.CoreGui
-    Aristois.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
-    Arraylist.Name = "Arraylist"
-    Arraylist.Parent = Aristois
-    Arraylist.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    Arraylist.BackgroundTransparency = 1.000
-    Arraylist.Position = UDim2.new(0.800000012, 0, 0.0500000007, 0)
-    Arraylist.Size = UDim2.new(0, 250, 0, 400)
-
-    UIListLayout.Parent = Arraylist
-
-    Logo.Name = "Logo"
-    Logo.Parent = Aristois
-    Logo.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    Logo.BackgroundTransparency = 0.400
-    Logo.Position = UDim2.new(0.00999999978, 0, 0.00999999978, 0)
-    Logo.Size = UDim2.new(0, 300, 0, 35)
-
-    UICorner.CornerRadius = UDim.new(0, 12)
-    UICorner.Parent = Logo
-
-    UIStroke.Parent = Logo
-    UIStroke.ApplyStrokeMode = 1
-    UIStroke.Color = Color3.fromRGB(255, 188, 217)
-    UIStroke.Thickness = 2
-
-
-    Text.Name = "Text"
-    Text.Parent = Logo
-    Text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    Text.BackgroundTransparency = 1.000
-    Text.Position = UDim2.new(0.0333333351, 0, 0, 0)
-    Text.Size = UDim2.new(0.930000007, 0, 1, 0)
-    Text.Font = Enum.Font.Arial
-    Text.Text = "Aristois | v3.4 Beta | "..GameTxt
-    Text.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Text.TextSize = 22.000
-    Text.TextXAlignment = Enum.TextXAlignment.Left
-
-    Stats.Name = "Stats"
-    Stats.Parent = Aristois
-    Stats.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    Stats.BackgroundTransparency = 1.000
-    Stats.Position = UDim2.new(0.00999999978, 0, 0.888000011, 0)
-    Stats.Size = UDim2.new(0, 150, 0, 65)
-
-    FPS.Name = "FPS"
-    FPS.Parent = Stats
-    FPS.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    FPS.BackgroundTransparency = 1.000
-    FPS.BorderColor3 = Color3.fromRGB(27, 42, 53)
-    FPS.BorderSizePixel = 0
-    FPS.Size = UDim2.new(1, 0, 0.5, 0)
-    FPS.Font = Enum.Font.SourceSansSemibold
-    FPS.RichText = true
-    FPS.Text = "<font color=\"#ffb4d8\">FPS:</font> 500"
-    FPS.TextColor3 = Color3.fromRGB(255, 255, 255)
-    FPS.TextSize = 25.000
-    FPS.TextXAlignment = Enum.TextXAlignment.Left
-
-    BPS.Name = "BPS"
-    BPS.Parent = Stats
-    BPS.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    BPS.BackgroundTransparency = 1.000
-    BPS.BorderColor3 = Color3.fromRGB(27, 42, 53)
-    BPS.BorderSizePixel = 0
-    BPS.RichText = true
-    BPS.Position = UDim2.new(0, 0, 0.5, 0)
-    BPS.Size = UDim2.new(1, 0, 0.5, 0)
-    BPS.Font = Enum.Font.SourceSansSemibold
-    BPS.Text = "<font color=\"#ffb4d8\">BPS:</font> 16"
-    BPS.TextColor3 = Color3.fromRGB(255, 255, 255)
-    BPS.TextSize = 25.000
-    BPS.TextXAlignment = Enum.TextXAlignment.Left
-
-    local RunService = game:GetService("RunService")
-
-    local TimeFunction = RunService:IsRunning() and time or os.clock
-
-    local LastIteration, Start
-    local FrameUpdateTable = {}
-
-    local function HeartbeatUpdate()
-        LastIteration = TimeFunction()
-        for Index = #FrameUpdateTable, 1, -1 do
-            FrameUpdateTable[Index + 1] = FrameUpdateTable[Index] >= LastIteration - 1 and FrameUpdateTable[Index] or nil
-        end
-
-        FrameUpdateTable[1] = LastIteration
-        FPS.Text = "<font color=\"#ffb4d8\">FPS:</font> " .. tostring(math.floor(TimeFunction() - Start >= 1 and #FrameUpdateTable or #FrameUpdateTable / (TimeFunction() - Start)))
-    end
-
-    Start = TimeFunction()
-    RunService.Heartbeat:Connect(HeartbeatUpdate)
-
-    local AristoisWindow = {}
-    function AristoisWindow.ToggleModule(ModuleName, ModuleSettings, bool)
-        for _, Mod in pairs(Arraylist:GetChildren()) do
-            if Mod:IsA("TextLabel") then
-                if Mod['ModuleValue'].Value == ModuleName then
-                    Mod:Destroy();
-                end
-            end
-        end
-        
-        if bool == true then
-            local Module = Instance.new("TextLabel")
-
-            Module.Name = tostring(#(ModuleName.." "..ModuleSettings))
-            Module.Parent = Arraylist
-            Module.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-            Module.BackgroundTransparency = 1.000
-            Module.Size = UDim2.new(1, 0, 0, 25)
-            Module.Font = Enum.Font.Arial
-            Module.Text = "<font color=\"#ffb4d8\">"..ModuleName.."</font> "..ModuleSettings
-            Module.TextColor3 = Color3.fromRGB(255, 255, 255)
-            Module.TextSize = 22.000
-            Module.TextWrapped = true
-            Module.TextXAlignment = Enum.TextXAlignment.Right
-            Module.RichText = true
-                    
-            local ModuleValue = Instance.new("StringValue")
-            ModuleValue.Parent = Module
-            ModuleValue.Name = "ModuleValue"
-            ModuleValue.Value = ModuleName
-            Aristois.newNotification("Success", "Aristois Module", "Enabled "..ModuleName, true, 3, function() print('Closed') end)
-        end
-    end
-    return AristoisWindow;
-end
-
 _G.Aristois = _G.Aristois or {}
 if not _G.Aristois.GuiDetectionBypass then
     local CoreGui = game.CoreGui
@@ -998,5 +853,150 @@ end
 scaleNotifHolderMaxNotifs()
 notifHolderListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(deleteNotifsOutsideFrame)
 
+
+function Aristois.Init(GameTxt)
+    local Aristois = Instance.new("ScreenGui")
+    local Arraylist = Instance.new("Frame")
+    local UIListLayout = Instance.new("UIListLayout")
+    local Logo = Instance.new("Frame")
+    local UICorner = Instance.new("UICorner")
+    local Text = Instance.new("TextLabel")
+    local Stats = Instance.new("Frame")
+    local FPS = Instance.new("TextLabel")
+    local BPS = Instance.new("TextLabel")
+    local UIStroke = Instance.new("UIStroke")
+
+    Aristois.Name = "Aristois"
+    Aristois.Parent = game.CoreGui
+    Aristois.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+    Arraylist.Name = "Arraylist"
+    Arraylist.Parent = Aristois
+    Arraylist.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Arraylist.BackgroundTransparency = 1.000
+    Arraylist.Position = UDim2.new(0.800000012, 0, 0.0500000007, 0)
+    Arraylist.Size = UDim2.new(0, 250, 0, 400)
+
+    UIListLayout.Parent = Arraylist
+
+    Logo.Name = "Logo"
+    Logo.Parent = Aristois
+    Logo.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Logo.BackgroundTransparency = 0.400
+    Logo.Position = UDim2.new(0.00999999978, 0, 0.00999999978, 0)
+    Logo.Size = UDim2.new(0, 300, 0, 35)
+
+    UICorner.CornerRadius = UDim.new(0, 12)
+    UICorner.Parent = Logo
+
+    UIStroke.Parent = Logo
+    UIStroke.ApplyStrokeMode = 1
+    UIStroke.Color = Color3.fromRGB(255, 188, 217)
+    UIStroke.Thickness = 2
+
+
+    Text.Name = "Text"
+    Text.Parent = Logo
+    Text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Text.BackgroundTransparency = 1.000
+    Text.Position = UDim2.new(0.0333333351, 0, 0, 0)
+    Text.Size = UDim2.new(0.930000007, 0, 1, 0)
+    Text.Font = Enum.Font.Arial
+    Text.Text = "Aristois | v3.4 Beta | "..GameTxt
+    Text.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Text.TextSize = 22.000
+    Text.TextXAlignment = Enum.TextXAlignment.Left
+
+    Stats.Name = "Stats"
+    Stats.Parent = Aristois
+    Stats.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Stats.BackgroundTransparency = 1.000
+    Stats.Position = UDim2.new(0.00999999978, 0, 0.888000011, 0)
+    Stats.Size = UDim2.new(0, 150, 0, 65)
+
+    FPS.Name = "FPS"
+    FPS.Parent = Stats
+    FPS.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    FPS.BackgroundTransparency = 1.000
+    FPS.BorderColor3 = Color3.fromRGB(27, 42, 53)
+    FPS.BorderSizePixel = 0
+    FPS.Size = UDim2.new(1, 0, 0.5, 0)
+    FPS.Font = Enum.Font.SourceSansSemibold
+    FPS.RichText = true
+    FPS.Text = "<font color=\"#ffb4d8\">FPS:</font> 500"
+    FPS.TextColor3 = Color3.fromRGB(255, 255, 255)
+    FPS.TextSize = 25.000
+    FPS.TextXAlignment = Enum.TextXAlignment.Left
+
+    BPS.Name = "BPS"
+    BPS.Parent = Stats
+    BPS.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    BPS.BackgroundTransparency = 1.000
+    BPS.BorderColor3 = Color3.fromRGB(27, 42, 53)
+    BPS.BorderSizePixel = 0
+    BPS.RichText = true
+    BPS.Position = UDim2.new(0, 0, 0.5, 0)
+    BPS.Size = UDim2.new(1, 0, 0.5, 0)
+    BPS.Font = Enum.Font.SourceSansSemibold
+    BPS.Text = "<font color=\"#ffb4d8\">BPS:</font> 16"
+    BPS.TextColor3 = Color3.fromRGB(255, 255, 255)
+    BPS.TextSize = 25.000
+    BPS.TextXAlignment = Enum.TextXAlignment.Left
+
+    local RunService = game:GetService("RunService")
+
+    local TimeFunction = RunService:IsRunning() and time or os.clock
+
+    local LastIteration, Start
+    local FrameUpdateTable = {}
+
+    local function HeartbeatUpdate()
+        LastIteration = TimeFunction()
+        for Index = #FrameUpdateTable, 1, -1 do
+            FrameUpdateTable[Index + 1] = FrameUpdateTable[Index] >= LastIteration - 1 and FrameUpdateTable[Index] or nil
+        end
+
+        FrameUpdateTable[1] = LastIteration
+        FPS.Text = "<font color=\"#ffb4d8\">FPS:</font> " .. tostring(math.floor(TimeFunction() - Start >= 1 and #FrameUpdateTable or #FrameUpdateTable / (TimeFunction() - Start)))
+    end
+
+    Start = TimeFunction()
+    RunService.Heartbeat:Connect(HeartbeatUpdate)
+
+    local AristoisWindow = {}
+    function AristoisWindow.ToggleModule(ModuleName, ModuleSettings, bool)
+        for _, Mod in pairs(Arraylist:GetChildren()) do
+            if Mod:IsA("TextLabel") then
+                if Mod['ModuleValue'].Value == ModuleName then
+                    Mod:Destroy();
+                end
+            end
+        end
+        
+        if bool == true then
+            local Module = Instance.new("TextLabel")
+
+            Module.Name = tostring(#(ModuleName.." "..ModuleSettings))
+            Module.Parent = Arraylist
+            Module.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            Module.BackgroundTransparency = 1.000
+            Module.Size = UDim2.new(1, 0, 0, 25)
+            Module.Font = Enum.Font.Arial
+            Module.Text = "<font color=\"#ffb4d8\">"..ModuleName.."</font> "..ModuleSettings
+            Module.TextColor3 = Color3.fromRGB(255, 255, 255)
+            Module.TextSize = 22.000
+            Module.TextWrapped = true
+            Module.TextXAlignment = Enum.TextXAlignment.Right
+            Module.RichText = true
+                    
+            local ModuleValue = Instance.new("StringValue")
+            ModuleValue.Parent = Module
+            ModuleValue.Name = "ModuleValue"
+            ModuleValue.Value = ModuleName
+            Aristois.newNotification("Success", "Aristois Module", "Enabled "..ModuleName, true, 3, function() print('Closed') end)
+        end
+    end
+    return AristoisWindow;
+end
 
 return Aristois;
