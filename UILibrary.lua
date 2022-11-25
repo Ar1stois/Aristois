@@ -163,6 +163,7 @@ function Aristois.Init(GameTxt)
             ModuleValue.Parent = Module
             ModuleValue.Name = "ModuleValue"
             ModuleValue.Value = ModuleName
+            Aristois.newNotification("Success", "Aristois Module", "Enabled "..ModuleName, true, 3, function() print('Closed') end)
         end
     end
     return AristoisWindow;
