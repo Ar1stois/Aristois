@@ -55,7 +55,7 @@ function Aristois.Init(GameTxt)
     Text.Position = UDim2.new(0.0333333351, 0, 0, 0)
     Text.Size = UDim2.new(0.930000007, 0, 1, 0)
     Text.Font = Enum.Font.Arial
-    Text.Text = "Aristois | v0.1 Beta | "..GameTxt
+    Text.Text = "Aristois | v3.4 Beta | "..GameTxt
     Text.TextColor3 = Color3.fromRGB(255, 255, 255)
     Text.TextSize = 22.000
     Text.TextXAlignment = Enum.TextXAlignment.Left
