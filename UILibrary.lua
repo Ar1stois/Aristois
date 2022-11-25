@@ -981,4 +981,4 @@ scaleNotifHolderMaxNotifs()
 notifHolderListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(deleteNotifsOutsideFrame)
 
 
-return Arisois;
+return Aristois;
